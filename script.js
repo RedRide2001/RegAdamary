@@ -175,70 +175,14 @@ OBRAS.forEach(([title, poem, desc], i) => {
 
 /* ---------- CAP 7: REPRODUCTOR ---------- */
 const audio = $('#audio'), playBtn = $('#playBtn'); let ti = 0;
-function loadTrack(i, autoplay = false) {
-  ti = ((i % TRACKS.length) + TRACKS.length) % TRACKS.length;
-
-  const track = TRACKS[ti];
-
-  $('#trackName').textContent = `${track.name} — ${track.artist}`;
-  $('#trackMessage').textContent = track.message;
-  $('#seek').value = 0;
-  $('#audioNote').textContent = '';
-
-  if (!playerReady) return;
-
-  player.loadVideoById(track.videoId);
-
-  if (!autoplay) {
-    player.pauseVideo();
-  }
+function loadTrack(i, autoplay){
+  ti = i % TRACKS.length; audio.src = TRACKS[ti].src; $('#trackName').textContent = TRACKS[ti].name; $('#seek').value = 0; $('#audioNote').textContent = '';
+  if (autoplay) togglePlay(true);
 }
-function togglePlay(forcePlay = false) {
-  if (!playerReady) {
-    $('#audioNote').textContent = 'Cargando la música... 🎧';
-    return;
-  }
-
-  const state = player.getPlayerState();
-
-  if (forcePlay || state !== YT.PlayerState.PLAYING) {
-    player.playVideo();
-  } else {
-    player.pauseVideo();
-  }
+function togglePlay(forcePlay){
+  if (audio.paused || forcePlay){ audio.play().then(()=>setPlaying(true)).catch(()=>{ setPlaying(false); $('#audioNote').textContent = 'Aún no hay audio: agrega un .mp3 en assets/audio/ y edita TRACKS en script.js.'; }); }
+  else { audio.pause(); setPlaying(false); }
 }
-function startProgress() {
-  stopProgress();
-
-  progressTimer = setInterval(() => {
-    if (!playerReady) return;
-
-    const duration = player.getDuration();
-    const current = player.getCurrentTime();
-
-    if (duration > 0) {
-      $('#seek').value = (current / duration) * 100;
-    }
-  }, 500);
-}
-
-function stopProgress() {
-  if (progressTimer) {
-    clearInterval(progressTimer);
-    progressTimer = null;
-  }
-}
-
-$('#seek').addEventListener('input', (e) => {
-  if (!playerReady) return;
-
-  const duration = player.getDuration();
-
-  if (duration > 0) {
-    const newTime = (e.target.value / 100) * duration;
-    player.seekTo(newTime, true);
-  }
-});
 function setPlaying(on){ playBtn.textContent = on ? '⏸' : '▶'; playBtn.setAttribute('aria-label', on ? 'Pausar' : 'Reproducir'); $('#wave').classList.toggle('on', on); }
 playBtn.onclick = () => togglePlay(); $('#nextBtn').onclick = () => loadTrack(ti+1, true);
 audio.addEventListener('timeupdate', () => { if (audio.duration) $('#seek').value = audio.currentTime/audio.duration*100; });
