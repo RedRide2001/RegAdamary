@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Adamary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Símbolos SVG reutilizables: conejito y cuarzo -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bunny" viewBox="0 0 80 100">
+    <ellipse cx="28" cy="24" rx="9" ry="22" fill="#fbf6ee" stroke="#b79b82" stroke-width="2"/>
+    <ellipse cx="52" cy="24" rx="9" ry="22" fill="#fbf6ee" stroke="#b79b82" stroke-width="2"/>
+    <ellipse cx="28" cy="26" rx="4" ry="15" fill="#f2c9cf"/><ellipse cx="52" cy="26" rx="4" ry="15" fill="#f2c9cf"/>
+    <ellipse cx="40" cy="70" rx="26" ry="24" fill="#fbf6ee" stroke="#b79b82" stroke-width="2"/>
+    <circle cx="31" cy="66" r="2.6" fill="#5b4a3f"/><circle cx="49" cy="66" r="2.6" fill="#5b4a3f"/>
+    <ellipse cx="40" cy="73" rx="3" ry="2" fill="#e8a6b0"/>
+    <circle cx="24" cy="76" r="4.5" fill="#f2c9cf" opacity=".7"/><circle cx="56" cy="76" r="4.5" fill="#f2c9cf" opacity=".7"/>
+  </symbol>
+  <symbol id="quartz" viewBox="0 0 40 50">
+    <polygon points="20,2 34,16 28,46 12,46 6,16" fill="#d9cbe8" stroke="#a894c0" stroke-width="1.5"/>
+    <polygon points="20,2 34,16 20,20 6,16" fill="#efe6f7"/><polyline points="20,20 28,46" stroke="#a894c0" fill="none"/>
+  </symbol>
+</svg>
+
+<div class="petals" aria-hidden="true"></div>
+
+<!-- ============ PORTADA ============ -->
+<main id="cover" class="cover">
+  <div class="cover-book" id="coverBook">
+    <div class="cover-front">
+      <div class="tape"></div>
+      <svg class="bun" aria-hidden="true"><use href="#bunny"/></svg>
+      <p class="ribbon" aria-hidden="true">🌸 🌹 🌷</p>
+      <h1 class="hand">Para Adamary</h1>
+      <p class="sub"><em>Un pequeño lugar hecho de palabras, recuerdos y cosas bonitas.</em></p>
+      <div class="quartz-row" aria-hidden="true"><svg><use href="#quartz"/></svg><svg><use href="#quartz"/></svg></div>
+    </div>
+  </div>
+  <button class="btn" id="openBtn">Abrir libro ✨</button>
+</main>
+
+<!-- ============ LIBRO ============ -->
+<div id="book" class="book" hidden>
+  <div class="pages" id="pages">
+
+    <!-- Cap. 1 -->
+    <section class="page" data-title="Antes de empezar">
+      <div class="paper letter">
+        <span class="tape t1"></span><span class="deco d1">🌿</span><span class="deco d2">🌼</span>
+        <h2 class="hand">Antes de empezar...</h2>
+        <p>Hay personas que llegan y simplemente hacen que algunos días sean un poquito más bonitos.</p>
+        <p>Este pequeño libro es una colección de palabras, detalles y pequeñas tonterías que hice pensando en ti.</p>
+        <p>No pretende ser algo enorme.</p>
+        <p>Solo quería dejarte un pequeño regalo que pudieras abrir cuando quisieras.</p>
+        <svg class="bun small"><use href="#bunny"/></svg>
+      </div>
+    </section>
+
+    <!-- Cap. 2 -->
+    <section class="page" data-title="Cosas que me hacen pensar en ti">
+      <h2 class="hand center">Cosas que me hacen pensar en ti</h2>
+      <p class="hint">Toca los objetos sobre la mesa</p>
+      <div class="table" id="table"></div>
+      <div class="card" id="card" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- Cap. 3 -->
+    <section class="page" data-title="Pequeñas cosas">
+      <h2 class="hand center">Pequeñas cosas</h2>
+      <p class="hint">Cada sticker tiene algo que decir</p>
+      <div class="stickers" id="stickers"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- Cap. 4 -->
+    <section class="page rain-page" data-title="Días de lluvia" id="rainPage">
+      <canvas id="rain" aria-hidden="true"></canvas>
+      <div class="bokeh" aria-hidden="true"></div>
+      <div class="rain-poem">
+        <h2 class="hand">Días de lluvia</h2>
+        <p>Afuera todo se vuelve lento.<br>El cristal guarda las gotas<br>como quien guarda conversaciones<br>que no quiere que se acaben.</p>
+        <p class="drop-msg" id="dropMsg" aria-live="polite"></p>
+        <button class="btn ghost" id="rainBtn" aria-pressed="false">Escuchar la lluvia</button>
+      </div>
+    </section>
+
+    <!-- Cap. 5 -->
+    <section class="page sky-page" data-title="Entre atardeceres" id="skyPage">
+      <div class="stars" id="stars" aria-hidden="true"></div>
+      <div class="moon" id="moon" aria-hidden="true"></div>
+      <div class="sun" id="sun" aria-hidden="true"></div>
+      <div class="hill" aria-hidden="true"></div>
+      <div class="sky-poem" id="skyPoem">
+        <h2 class="hand">Entre atardeceres</h2>
+        <p>El día se va despacio,<br>sin pedir permiso ni disculpas.<br>Y uno aprende que hay cosas<br>que brillan mejor cuando ya casi es de noche.</p>
+      </div>
+      <label class="slider">Deja pasar el tiempo
+        <input type="range" id="time" min="0" max="100" value="0">
+      </label>
+    </section>
+
+    <!-- Cap. 6 -->
+    <section class="page" data-title="Pequeño museo">
+      <h2 class="hand center">Pequeño museo</h2>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Cap. 7 -->
+    <section class="page" data-title="Para leer con audífonos">
+      <h2 class="hand center">Para leer con audífonos</h2>
+      <div class="player">
+        <div class="wires" aria-hidden="true">🎧</div>
+        <p class="track" id="trackName">—</p>
+        <div class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <input type="range" id="seek" min="0" max="100" value="0" aria-label="Progreso">
+        <div class="ctrls">
+          <button class="round" id="playBtn" aria-label="Reproducir">▶</button>
+          <button class="round sm" id="nextBtn" aria-label="Siguiente canción">⏭</button>
+        </div>
+        <p class="note" id="audioNote"></p>
+        <audio id="audio" preload="none"></audio>
+      </div>
+    </section>
+
+    <!-- Final -->
+    <section class="page" data-title="Última carta">
+      <div class="paper letter final">
+        <span class="tape t1"></span>
+        <h2 class="hand">Gracias por la compañía.</h2>
+        <p>Por las conversaciones.</p><p>Por las risas.</p><p>Por los momentos inesperados.</p><p>Por estar.</p>
+        <p>Y por hacer que existan recuerdos que vale la pena guardar.</p>
+        <p class="dash">—</p>
+        <p><strong>Fin del libro.</strong></p>
+        <p><em>Aunque siempre puedes volver a abrirlo.</em></p>
+        <svg class="bun small"><use href="#bunny"/></svg>
+        <button class="btn ghost" id="restart">Volver al inicio</button>
+      </div>
+    </section>
+  </div>
+
+  <nav class="nav" aria-label="Navegación del libro">
+    <button class="round sm" id="prev" aria-label="Página anterior">←</button>
+    <div class="dots" id="dots"></div>
+    <button class="round sm" id="next" aria-label="Página siguiente">→</button>
+  </nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
